@@ -21,7 +21,7 @@ export default function RegisterPage() {
         <div className="mb-8 text-center">
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src="/Group 13.png"
               alt="ServiYa Logo"
               width={80}
               height={80}
@@ -29,7 +29,7 @@ export default function RegisterPage() {
             />
           </Link>
           <h1 className="text-2xl font-bold mt-4 text-[#4A4A4A]">ServiYa</h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-white">
             Conecta con profesionales o ofrece tus servicios
           </p>
         </div>
@@ -115,7 +115,7 @@ export default function RegisterPage() {
                   <p className="text-sm text-muted-foreground">
                     ¿Ya tienes una cuenta?{" "}
                     <Link
-                      href="/auth/login"
+                      href="login"
                       className="text-[#F28C38] hover:underline"
                     >
                       Inicia sesión
@@ -213,7 +213,7 @@ export default function RegisterPage() {
                   <p className="text-sm text-muted-foreground">
                     ¿Ya tienes una cuenta?{" "}
                     <Link
-                      href="/auth/login"
+                      href="login"
                       className="text-[#F28C38] hover:underline"
                     >
                       Inicia sesión

@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,18 +10,39 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Facebook } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [userType, setUserType] = useState("client");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Aquí normalmente iría la lógica de autenticación
+    // Por ahora solo redireccionamos según el tipo de usuario
+    if (userType === "admin") {
+      router.push("/admin");
+    } else if (userType === "technician") {
+      router.push("/technician");
+    } else {
+      router.push("/client");
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b  from-[#fa7a22] to text-white via-[#e1874a] to-whitep-2">
-      <div className="max-w-md w-max">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#fa7a22] via-[#e1874a] to-white">
+      <div className="max-w-md w-full mx-4">
         <div className="mb-8 text-center">
           <Link href="/">
             <Image
-              src="/logo.svg"
+              src="/Group 13.png"
               alt="ServiYa Logo"
               width={80}
               height={80}
@@ -36,28 +58,71 @@ export default function LoginPage() {
               Ingresa tus credenciales para acceder a tu cuenta
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Correo electrónico</Label>
-              <Input id="email" type="email" placeholder="correo@ejemplo.com" />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Contraseña</Label>
-                <Link
-                  href="/auth/reset-password"
-                  className="text-sm text-[#F28C38] hover:underline"
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label>Tipo de Usuario</Label>
+                <RadioGroup
+                  defaultValue="client"
+                  onValueChange={setUserType}
+                  className="flex space-x-4"
                 >
-                  ¿Olvidaste tu contraseña?
-                </Link>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="client" id="client" />
+                    <Label htmlFor="client">Cliente</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="technician" id="technician" />
+                    <Label htmlFor="technician">Técnico</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="admin" id="admin" />
+                    <Label htmlFor="admin">Administrador</Label>
+                  </div>
+                </RadioGroup>
               </div>
-              <Input id="password" type="password" />
-            </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="email">Correo electrónico</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="correo@ejemplo.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password">Contraseña</Label>
+                  <Link
+                    href="/auth/reset-password"
+                    className="text-sm text-[#F28C38] hover:underline"
+                  >
+                    ¿Olvidaste tu contraseña?
+                  </Link>
+                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full bg-[#F28C38] hover:bg-[#F28C38]/90"
+              >
+                Iniciar Sesión
+              </Button>
+            </form>
           </CardContent>
+
           <CardFooter className="flex flex-col space-y-4">
-            <Button className="w-full bg-[#F28C38] hover:bg-[#F28C38]/90">
-              Iniciar Sesión
-            </Button>
             <div className="relative w-full">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -68,6 +133,7 @@ export default function LoginPage() {
                 </span>
               </div>
             </div>
+
             <div className="grid grid-cols-2 gap-4">
               <Button variant="outline">
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
@@ -95,11 +161,12 @@ export default function LoginPage() {
                 Facebook
               </Button>
             </div>
+
             <div className="text-center mt-4">
               <p className="text-sm text-muted-foreground">
                 ¿No tienes una cuenta?{" "}
                 <Link
-                  href="/auth/register"
+                  href="register"
                   className="text-[#F28C38] hover:underline"
                 >
                   Regístrate aquí
